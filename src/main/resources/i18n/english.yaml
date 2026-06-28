@@ -1,0 +1,36 @@
+file_version: 3
+kick:
+  vpn_abuse: |
+    &5[VPN Usage Detected]
+    &7Joining with &5VPNs&7 is not allowed on this server.
+    If you want to continue please disable all &5proxies&7 and &5VPNs
+
+    &7Not using a &5VPN? &7Please create an issue providing
+    this IP: {ip} at:
+
+    https://github.com/Tulis12/ProxieSuite
+    or contact admins at abuse@xyz.net
+  proxy_not_ready: |
+    &5Server is not ready yet
+
+    &7Sorry for inconvenience, but server is not ready yet!
+    Please wait a few seconds and try to log in again.
+  nonpremium_logged_as_premium: |
+    &5You must login with premium account!
+
+    &7Sorry, but in the past you logged in using
+    a premium account, or you configured premium login.
+
+    &7You lost access to your premium account?
+    Contact administration at: &5admin@xyz.net
+  server_error: |
+    &5There was an error on the server side!
+
+    &7Sorry for inconvenience but something on the
+    server side broke down and started crying.
+
+    The admins got notified of this, and you should try sometime again soon.
+command:
+  error:
+    already_authenticated: "&7You are already logged in!"
+    only_player: "&7Only players can use this command!"

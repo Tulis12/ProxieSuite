@@ -1,0 +1,6 @@
+{
+  "id": "proxiesuite",
+  "name": "ProxieSuite",
+  "version": "${version}",
+  "main": "dev.tulis.proxieSuite.Main.Main"
+}

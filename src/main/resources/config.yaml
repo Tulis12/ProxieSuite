@@ -1,0 +1,39 @@
+# Please leave this value as it is!
+file_version: 9
+
+# Language of the plugin, available: polish, english
+locale: english
+
+# Required, the only supported database as of now is MySQL,
+# please, don't use root user!
+database:
+  host: "x.x.x.x:3306"
+  database: "mysuperdb"
+  username: "user"
+  password: "xxx"
+
+login:
+  # Whether to enable this module (very much recommended),
+  # to keep your server secure. Disable this only if you have
+  # some other form of logging in, or if you 100% know what you
+  # are doing
+  enabled: true
+
+  # Whether authenticate users automatically using online auth,
+  # or allow users to enable online auth themselves
+  online_auth_enabled: true
+
+servers:
+  # The server where users are redirected to login (offline-mode)
+  login: "login"
+  # The server where users are redirected when authenticated
+  main: "main"
+
+vpn:
+  # If set to true the proxy will refuse connections made
+  # with VPNs or Proxies
+  enabled: true
+
+  # You can replace this with compatible repo (same file name and path),
+  # if you don't know what that means please leave this alone!
+  is_vpn_repo: "https://github.com/josephrocca/is-vpn.git" # Copyright (c) 2023 josephrocca
