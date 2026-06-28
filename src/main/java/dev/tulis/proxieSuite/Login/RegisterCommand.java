@@ -80,6 +80,16 @@ public final class RegisterCommand implements SimpleCommand {
             return;
         }
 
+        if (args[0].equals("password")) {
+            p.sendMessage(
+                Component.text(
+                    i18n.l("command.joke.register.password_is_password")
+                )
+            );
+
+            return;
+        }
+
         try (Connection conn = Database.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(
                 "UPDATE proxie_players SET password = ? WHERE username = ? AND password IS NULL"
@@ -104,6 +114,14 @@ public final class RegisterCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
+        if (!(invocation.source() instanceof Player)) return true;
+
+        Player p = (Player) invocation.source();
+        if (
+            StateManager.getPlayerState(p.getUniqueId()) ==
+            PlayerState.AUTHENTICATED
+        ) return false;
+
         return true;
     }
 

@@ -1,4 +1,4 @@
-file_version: 6
+file_version: 7
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -34,6 +34,7 @@ command:
   general_error:
     only_player: "&cOnly players can use this command!"
     syntax: "&cYou used the command incorrectly! &7Usage:"
+
   error:
     login:
       wrong_password: "&cWrong password!"
@@ -42,6 +43,7 @@ command:
     register:
       you_already_registered: "&cYou already registered! Use /login"
       password_do_not_match: "&cPasswords don't match!"
+
   success:
     login: "&2You sucessfully logged in! Redirecting..."
 
@@ -49,10 +51,18 @@ command:
     login: "/{alias} <password>"
     register: "/{alias} <password> <repeat that password>"
 
+  joke:
+    register:
+      password_is_password: >
+        &7OOOOOOOOOOOH You prankster! You crazy!?
+        You seriously thought that my &5BEAUTIFUL ultra robust and secure plugin&7 called &l&5ProxieSuite
+        &r&7&o[I know the name is amazing &r&d(^///^)&7] would allow such a &onot-secure-at-all &7password?
+        You prankster, you crazy :P (Seriously pick a better password than &n&opassword&r&7)
+
   args:
     register:
-      - ["<password>"]
-      - ["<repeat this password>"]
+      - ["password"]
+      - ["repeat this password"]
     login:
       - ["password"]
 

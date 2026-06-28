@@ -101,6 +101,14 @@ public final class LoginCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
+        if (!(invocation.source() instanceof Player)) return true;
+
+        Player p = (Player) invocation.source();
+        if (
+            StateManager.getPlayerState(p.getUniqueId()) ==
+            PlayerState.AUTHENTICATED
+        ) return false;
+
         return true;
     }
 

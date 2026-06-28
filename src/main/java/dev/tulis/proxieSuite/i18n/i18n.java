@@ -17,7 +17,7 @@ import java.util.Objects;
 public class i18n {
 
     Path folder;
-    Main plugin;
+    static Main plugin;
     private static String locale;
     private static YamlDocument loadedLocale;
 
@@ -131,13 +131,19 @@ public class i18n {
     }
 
     public static List<String> handleSuggestion(String command, String[] args) {
-        // TODO: make this shit safe
+        try {
+            @SuppressWarnings("unchecked")
+            List<List<String>> cmdArgs = (List<
+                List<String>
+            >) loadedLocale.getList("command.args." + command);
 
-        List<List<String>> cmdArgs = (List<List<String>>) loadedLocale.getList(
-            "command.args." + command
-        );
+            if (args.length > cmdArgs.size()) return List.of();
 
-        if (args.length == 0) return cmdArgs.get(0);
-        return cmdArgs.get(args.length - 1);
+            if (args.length == 0) return cmdArgs.get(0);
+            return cmdArgs.get(args.length - 1);
+        } catch (ClassCastException e) {
+            plugin.getLogger().error("Config schema is wrong!", e);
+            return List.of();
+        }
     }
 }
