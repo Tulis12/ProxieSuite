@@ -1,4 +1,4 @@
-file_version: 3
+file_version: 6
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -31,6 +31,32 @@ kick:
 
     The admins got notified of this, and you should try sometime again soon.
 command:
+  general_error:
+    only_player: "&cOnly players can use this command!"
+    syntax: "&cYou used the command incorrectly! &7Usage:"
   error:
-    already_authenticated: "&7You are already logged in!"
-    only_player: "&7Only players can use this command!"
+    login:
+      wrong_password: "&cWrong password!"
+      already_authenticated: "&cYou are already logged in!"
+      not_registered: "&cYou are not registered!"
+    register:
+      you_already_registered: "&cYou already registered! Use /login"
+      password_do_not_match: "&cPasswords don't match!"
+  success:
+    login: "&2You sucessfully logged in! Redirecting..."
+
+  syntax:
+    login: "/{alias} <password>"
+    register: "/{alias} <password> <repeat that password>"
+
+  args:
+    register:
+      - ["<password>"]
+      - ["<repeat this password>"]
+    login:
+      - ["password"]
+
+event:
+  error:
+    change_server:
+      not_logged_in: "&cYou are not logged in!"

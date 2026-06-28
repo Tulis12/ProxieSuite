@@ -10,6 +10,7 @@ import dev.tulis.proxieSuite.Main.Main;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,13 +59,24 @@ public class i18n {
         }
     }
 
-    public static String l_cmd(String key) {
+    public static String l_console(String key) {
         return loadedLocale.getString(key).replaceAll("(?<!\\\\)&.", "");
     }
 
     public static String l(String key) {
         return loadedLocale
             .getString(key)
+            .replaceAll("(?<!\\\\)&", "§")
+            .replace("\\&", "&");
+    }
+
+    public static String l_command(String command_syntax_key, String alias) {
+        return (
+            loadedLocale.getString("command.general_error.syntax") +
+            " " +
+            loadedLocale.getString("command.syntax." + command_syntax_key)
+        )
+            .replace("{alias}", alias)
             .replaceAll("(?<!\\\\)&", "§")
             .replace("\\&", "&");
     }
@@ -92,7 +104,10 @@ public class i18n {
         return msg;
     }
 
-    public static String l_cmd(String key, Map<String, Object> placeholders) {
+    public static String l_console(
+        String key,
+        Map<String, Object> placeholders
+    ) {
         String msg = loadedLocale.getString(key);
 
         if (msg == null) {
@@ -113,5 +128,16 @@ public class i18n {
         }
 
         return msg;
+    }
+
+    public static List<String> handleSuggestion(String command, String[] args) {
+        // TODO: make this shit safe
+
+        List<List<String>> cmdArgs = (List<List<String>>) loadedLocale.getList(
+            "command.args." + command
+        );
+
+        if (args.length == 0) return cmdArgs.get(0);
+        return cmdArgs.get(args.length - 1);
     }
 }

@@ -21,29 +21,21 @@ public class PreLoginHandler {
         plugin = m;
     }
 
-    private Runnable addUser(PreLoginEvent event, boolean onlineauth) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                try (Connection conn = Database.getConnection()) {
-                    PreparedStatement createUser = conn.prepareStatement(
-                        "INSERT INTO proxie_players(username, uuid, onlineauth) VALUES (?, ?, ?)"
-                    );
+    private void addUser(PreLoginEvent event, boolean onlineauth) {
+        try (Connection conn = Database.getConnection()) {
+            PreparedStatement createUser = conn.prepareStatement(
+                "INSERT INTO proxie_players(username, uuid, onlineauth) VALUES (?, ?, ?)"
+            );
 
-                    createUser.setString(1, event.getUsername());
-                    createUser.setString(2, event.getUniqueId().toString());
-                    createUser.setBoolean(3, onlineauth);
-                    createUser.executeUpdate();
-                } catch (SQLException e) {
-                    plugin
-                        .getLogger()
-                        .error(
-                            "Unable to insert new user into the database!",
-                            e
-                        );
-                }
-            }
-        };
+            createUser.setString(1, event.getUsername());
+            createUser.setString(2, event.getUniqueId().toString());
+            createUser.setBoolean(3, onlineauth);
+            createUser.executeUpdate();
+        } catch (SQLException e) {
+            plugin
+                .getLogger()
+                .error("Unable to insert new user into the database!", e);
+        }
     }
 
     @Subscribe

@@ -112,4 +112,7 @@ buildNumber.properties
 # Common working directory
 run/
 
-server*
+server*/
+# Nextcloud sync in my case (really useful XD)
+.sync-exclude.lst
+.idea

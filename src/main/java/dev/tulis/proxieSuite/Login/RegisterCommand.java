@@ -5,9 +5,13 @@ import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
 import dev.tulis.proxieSuite.i18n.i18n;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 
@@ -35,7 +39,9 @@ public final class RegisterCommand implements SimpleCommand {
 
         if (!(source instanceof Player)) {
             source.sendMessage(
-                Component.text(i18n.l_cmd("command.error.only_player"))
+                Component.text(
+                    i18n.l_console("command.general_error.only_player")
+                )
             );
 
             return;
@@ -48,11 +54,52 @@ public final class RegisterCommand implements SimpleCommand {
             PlayerState.AUTHENTICATED
         ) {
             p.sendMessage(
-                Component.text(i18n.l("command.error.already_authenticated"))
+                Component.text(
+                    i18n.l("command.error.login.already_authenticated")
+                )
             );
 
             return;
         }
+
+        if (args.length != 2) {
+            p.sendMessage(
+                Component.text(i18n.l_command("register", invocation.alias()))
+            );
+
+            return;
+        }
+
+        if (!args[0].equals(args[1])) {
+            p.sendMessage(
+                Component.text(
+                    i18n.l("command.error.register.password_do_not_match")
+                )
+            );
+
+            return;
+        }
+
+        try (Connection conn = Database.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(
+                "UPDATE proxie_players SET password = ? WHERE username = ? AND password IS NULL"
+            );
+            statement.setString(1, PasswordManager.hashPassword(args[0]));
+            statement.setString(2, p.getUsername());
+
+            int updated = statement.executeUpdate();
+            if (updated == 0) {
+                p.sendMessage(
+                    Component.text(
+                        i18n.l("command.error.register.you_already_registered")
+                    )
+                );
+
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } // TODO: robust logging
     }
 
     @Override
@@ -61,8 +108,8 @@ public final class RegisterCommand implements SimpleCommand {
     }
 
     @Override
-    public List<String> suggest(final Invocation invocation) {
-        if (invocation.arguments().length == 0) return List.of("haslo");
-        return List.of();
+    public List<String> suggest(Invocation invocation) {
+        String[] args = invocation.arguments();
+        return i18n.handleSuggestion("register", args);
     }
 }
