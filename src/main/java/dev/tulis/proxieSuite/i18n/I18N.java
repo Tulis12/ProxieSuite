@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class i18n {
+public class I18N {
 
     Path folder;
     static Main plugin;
     private static String locale;
     private static YamlDocument loadedLocale;
 
-    public i18n(Main m) {
+    public I18N(Main m) {
         plugin = m;
         folder = plugin.getDataDirectory().resolve("i18n");
         folder.toFile().mkdir();

@@ -6,7 +6,7 @@ import com.velocitypowered.api.event.player.ServerPreConnectEvent.ServerResult;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import net.kyori.adventure.text.Component;
 
 public class ServerPreConnectHandler {
@@ -41,7 +41,7 @@ public class ServerPreConnectHandler {
                     .getPlayer()
                     .sendMessage(
                         Component.text(
-                            i18n.l("event.error.change_server.not_logged_in")
+                            I18N.l("event.error.change_server.not_logged_in")
                         )
                     );
                 event.setResult(ServerResult.denied());

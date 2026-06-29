@@ -5,7 +5,7 @@ import com.velocitypowered.api.event.connection.PreLoginEvent;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,7 +63,7 @@ public class PreLoginHandler {
                 plugin.getLogger().error("Database exception at handshake!", e);
                 event.setResult(
                     PreLoginEvent.PreLoginComponentResult.denied(
-                        Component.text(i18n.l("kick.server_error"))
+                        Component.text(I18N.l("kick.server_error"))
                     )
                 );
                 return;
@@ -74,7 +74,7 @@ public class PreLoginHandler {
                     event.setResult(
                         PreLoginEvent.PreLoginComponentResult.denied(
                             Component.text(
-                                i18n.l("kick.nonpremium_logged_as_premium")
+                                I18N.l("kick.nonpremium_logged_as_premium")
                             )
                         )
                     );

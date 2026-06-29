@@ -17,7 +17,7 @@ import dev.tulis.proxieSuite.API.LogFilter;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.VPNDetection.VPN;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -49,7 +49,7 @@ public class Main {
         new Database(this);
 
         vpn = new VPN(this);
-        new i18n(this);
+        new I18N(this);
 
         new Login(this);
 

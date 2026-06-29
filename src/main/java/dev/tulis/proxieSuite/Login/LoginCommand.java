@@ -9,7 +9,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import dev.tulis.proxieSuite.Login.PasswordManager.PasswordState;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 
@@ -38,7 +38,7 @@ public final class LoginCommand implements SimpleCommand {
         if (!(source instanceof Player)) {
             source.sendMessage(
                 Component.text(
-                    i18n.l_console("command.general_error.only_player")
+                    I18N.l_console("command.general_error.only_player")
                 )
             );
 
@@ -53,7 +53,7 @@ public final class LoginCommand implements SimpleCommand {
         ) {
             p.sendMessage(
                 Component.text(
-                    i18n.l("command.error.login.already_authenticated")
+                    I18N.l("command.error.login.already_authenticated")
                 )
             );
 
@@ -62,7 +62,7 @@ public final class LoginCommand implements SimpleCommand {
 
         if (args.length != 1) {
             p.sendMessage(
-                Component.text(i18n.l_command("login", invocation.alias()))
+                Component.text(I18N.l_command("login", invocation.alias()))
             );
 
             return;
@@ -75,7 +75,7 @@ public final class LoginCommand implements SimpleCommand {
 
         if (valid == PasswordState.INCORRECT) {
             p.sendMessage(
-                Component.text(i18n.l("command.error.login.wrong_password"))
+                Component.text(I18N.l("command.error.login.wrong_password"))
             );
 
             return;
@@ -83,7 +83,7 @@ public final class LoginCommand implements SimpleCommand {
 
         if (valid == PasswordState.NOT_REGISTERED) {
             p.sendMessage(
-                Component.text(i18n.l("command.error.login.not_registered"))
+                Component.text(I18N.l("command.error.login.not_registered"))
             );
 
             return;
@@ -94,7 +94,7 @@ public final class LoginCommand implements SimpleCommand {
             .getServer(plugin.getConfig().getString("servers.main"))
             .orElseThrow();
 
-        p.sendMessage(Component.text(i18n.l("command.success.login")));
+        p.sendMessage(Component.text(I18N.l("command.success.login")));
         StateManager.setPlayerState(p.getUniqueId(), PlayerState.AUTHENTICATED);
         p.createConnectionRequest(login).fireAndForget();
     }
@@ -115,6 +115,6 @@ public final class LoginCommand implements SimpleCommand {
     @Override
     public List<String> suggest(Invocation invocation) {
         String[] args = invocation.arguments();
-        return i18n.handleSuggestion("login", args);
+        return I18N.handleSuggestion("login", args);
     }
 }

@@ -8,7 +8,7 @@ import com.velocitypowered.api.proxy.Player;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -40,7 +40,7 @@ public final class RegisterCommand implements SimpleCommand {
         if (!(source instanceof Player)) {
             source.sendMessage(
                 Component.text(
-                    i18n.l_console("command.general_error.only_player")
+                    I18N.l_console("command.general_error.only_player")
                 )
             );
 
@@ -55,7 +55,7 @@ public final class RegisterCommand implements SimpleCommand {
         ) {
             p.sendMessage(
                 Component.text(
-                    i18n.l("command.error.login.already_authenticated")
+                    I18N.l("command.error.login.already_authenticated")
                 )
             );
 
@@ -64,7 +64,7 @@ public final class RegisterCommand implements SimpleCommand {
 
         if (args.length != 2) {
             p.sendMessage(
-                Component.text(i18n.l_command("register", invocation.alias()))
+                Component.text(I18N.l_command("register", invocation.alias()))
             );
 
             return;
@@ -73,7 +73,7 @@ public final class RegisterCommand implements SimpleCommand {
         if (!args[0].equals(args[1])) {
             p.sendMessage(
                 Component.text(
-                    i18n.l("command.error.register.password_do_not_match")
+                    I18N.l("command.error.register.password_do_not_match")
                 )
             );
 
@@ -83,7 +83,7 @@ public final class RegisterCommand implements SimpleCommand {
         if (args[0].equals("password")) {
             p.sendMessage(
                 Component.text(
-                    i18n.l("command.joke.register.password_is_password")
+                    I18N.l("command.joke.register.password_is_password")
                 )
             );
 
@@ -101,7 +101,7 @@ public final class RegisterCommand implements SimpleCommand {
             if (updated == 0) {
                 p.sendMessage(
                     Component.text(
-                        i18n.l("command.error.register.you_already_registered")
+                        I18N.l("command.error.register.you_already_registered")
                     )
                 );
 
@@ -128,6 +128,6 @@ public final class RegisterCommand implements SimpleCommand {
     @Override
     public List<String> suggest(Invocation invocation) {
         String[] args = invocation.arguments();
-        return i18n.handleSuggestion("register", args);
+        return I18N.handleSuggestion("register", args);
     }
 }

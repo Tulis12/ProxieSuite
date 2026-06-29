@@ -3,7 +3,7 @@ package dev.tulis.proxieSuite.VPNDetection;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.i18n.i18n;
+import dev.tulis.proxieSuite.i18n.I18N;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
 
@@ -20,7 +20,7 @@ public class onHandshakeHandlerVPN {
         if (!plugin.getVpn().isReady()) {
             event.setResult(
                 PreLoginEvent.PreLoginComponentResult.denied(
-                    Component.text(i18n.l("kick.proxy_not_ready"))
+                    Component.text(I18N.l("kick.proxy_not_ready"))
                 )
             );
             return;
@@ -40,7 +40,7 @@ public class onHandshakeHandlerVPN {
             event.setResult(
                 PreLoginEvent.PreLoginComponentResult.denied(
                     Component.text(
-                        i18n.l(
+                        I18N.l(
                             "kick.vpn_abuse",
                             Map.of(
                                 "ip",
