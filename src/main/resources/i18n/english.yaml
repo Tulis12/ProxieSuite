@@ -1,4 +1,4 @@
-file_version: 7
+file_version: 9
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -43,6 +43,7 @@ command:
     register:
       you_already_registered: "&cYou already registered! Use /login"
       password_do_not_match: "&cPasswords don't match!"
+      password_is_password: "&7Please don't use &npassword &r&7 as your password!"
 
   success:
     login: "&2You sucessfully logged in! Redirecting..."
@@ -53,11 +54,8 @@ command:
 
   joke:
     register:
-      password_is_password: >
-        &7OOOOOOOOOOOH You prankster! You crazy!?
-        You seriously thought that my &5BEAUTIFUL ultra robust and secure plugin&7 called &l&5ProxieSuite
-        &r&7&o[I know the name is amazing &r&d(^///^)&7] would allow such a &onot-secure-at-all &7password?
-        You prankster, you crazy :P (Seriously pick a better password than &n&opassword&r&7)
+      password_is_password: |
+        &7You prankster :3, I didn't mean password as in &npassword&r&7, please be a little more creative honeypie...
 
   args:
     register:

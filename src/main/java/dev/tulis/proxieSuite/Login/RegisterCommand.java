@@ -9,6 +9,7 @@ import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
 import dev.tulis.proxieSuite.i18n.I18N;
+import dev.tulis.proxieSuite.i18n.Jokes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -81,9 +82,19 @@ public final class RegisterCommand implements SimpleCommand {
         }
 
         if (args[0].equals("password")) {
+            if (Jokes.jokesEnabled()) {
+                p.sendMessage(
+                    Component.text(
+                        I18N.l("command.joke.register.password_is_password")
+                    )
+                );
+
+                return;
+            }
+
             p.sendMessage(
                 Component.text(
-                    I18N.l("command.joke.register.password_is_password")
+                    I18N.l("command.error.register.password_is_password")
                 )
             );
 

@@ -22,6 +22,8 @@ public class I18N {
     private static YamlDocument loadedLocale;
 
     public I18N(Main m) {
+        new Jokes(m);
+
         plugin = m;
         folder = plugin.getDataDirectory().resolve("i18n");
         folder.toFile().mkdir();

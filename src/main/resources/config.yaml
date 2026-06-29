@@ -1,8 +1,11 @@
 # Please leave this value as it is!
-file_version: 9
+file_version: 10
 
 # Language of the plugin, available: polish, english
 locale: english
+
+# Whether to enable some easter eggs and jokes
+jokes: true
 
 # Required, the only supported database as of now is MySQL,
 # please, don't use root user!
