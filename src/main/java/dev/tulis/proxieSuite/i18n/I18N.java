@@ -1,5 +1,6 @@
 package dev.tulis.proxieSuite.i18n;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand.Invocation;
 import com.velocitypowered.api.proxy.Player;
 import dev.dejvokep.boostedyaml.YamlDocument;
@@ -66,6 +67,14 @@ public class I18N {
             plugin
                 .getLogger()
                 .error("Cannot load language: {}.yaml", locale, e);
+        }
+    }
+
+    public static void sendMessage(CommandSource source, String msg) {
+        if (source instanceof Player) {
+            source.sendMessage(Component.text(l(msg)));
+        } else {
+            source.sendMessage(Component.text(l_console(msg)));
         }
     }
 
