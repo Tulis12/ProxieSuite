@@ -1,4 +1,4 @@
-file_version: 9
+file_version: 17
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -30,6 +30,7 @@ kick:
     server side broke down and started crying.
 
     The admins got notified of this, and you should try sometime again soon.
+
 command:
   general_error:
     only_player: "&cOnly players can use this command!"
@@ -48,21 +49,42 @@ command:
   success:
     login: "&2You sucessfully logged in! Redirecting..."
 
-  syntax:
-    login: "/{alias} <password>"
-    register: "/{alias} <password> <repeat that password>"
-
   joke:
     register:
-      password_is_password: |
-        &7You prankster :3, I didn't mean password as in &npassword&r&7, please be a little more creative honeypie...
+      password_is_password: I didn't mean password as in &npassword&r&7, please be a little bit more creative...
 
-  args:
+  commands:
     register:
-      - ["password"]
-      - ["repeat this password"]
+      syntax: "/{alias} <password> <repeat this password>"
+      args:
+        - password:
+            name: password
+            args:
+              - password:
+                  name: password
+
     login:
-      - ["password"]
+      syntax: "/{alias} <password>"
+      args:
+        - password:
+            name: password
+
+    proxiesuite:
+      syntax: "/{alias} <reload|admin> [PARAMS]"
+      args:
+        - reload:
+            name: reload
+        - permissions:
+            syntax: "/{alias} permissions <add|remove> [PARAMS]"
+            name: permissions
+            args:
+              - add:
+                  name: test
+              - remove:
+                  name: test2
+                  args:
+                    - add:
+                        name: add
 
 event:
   error:

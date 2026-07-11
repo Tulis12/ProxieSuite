@@ -61,9 +61,7 @@ public final class LoginCommand implements SimpleCommand {
         }
 
         if (args.length != 1) {
-            p.sendMessage(
-                Component.text(I18N.l_command("login", invocation.alias()))
-            );
+            p.sendMessage(I18N.commandSyntax("login", invocation));
 
             return;
         }

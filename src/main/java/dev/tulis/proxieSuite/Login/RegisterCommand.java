@@ -64,9 +64,7 @@ public final class RegisterCommand implements SimpleCommand {
         }
 
         if (args.length != 2) {
-            p.sendMessage(
-                Component.text(I18N.l_command("register", invocation.alias()))
-            );
+            p.sendMessage(I18N.commandSyntax("register", invocation));
 
             return;
         }

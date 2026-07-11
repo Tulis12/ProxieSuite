@@ -14,6 +14,7 @@ import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import dev.tulis.proxieSuite.API.LogFilter;
+import dev.tulis.proxieSuite.Administration.ProxieSuite;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.VPNDetection.VPN;
@@ -52,8 +53,7 @@ public class Main {
         new I18N(this);
 
         new Login(this);
-
-        // Plugin initialization logic goes here
+        new ProxieSuite(this);
     }
 
     @Inject

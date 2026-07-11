@@ -1,11 +1,15 @@
 package dev.tulis.proxieSuite.i18n;
 
+import com.velocitypowered.api.command.SimpleCommand.Invocation;
+import com.velocitypowered.api.proxy.Player;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import dev.tulis.proxieSuite.CommandUtils.CommandBuilder;
+import dev.tulis.proxieSuite.CommandUtils.CommandNode;
 import dev.tulis.proxieSuite.Main.Main;
 import java.io.File;
 import java.io.IOException;
@@ -13,12 +17,16 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 public class I18N {
 
     Path folder;
     static Main plugin;
     private static String locale;
+
+    @Getter
     private static YamlDocument loadedLocale;
 
     public I18N(Main m) {
@@ -72,15 +80,32 @@ public class I18N {
             .replace("\\&", "&");
     }
 
-    public static String l_command(String command_syntax_key, String alias) {
-        return (
-            loadedLocale.getString("command.general_error.syntax") +
-            " " +
-            loadedLocale.getString("command.syntax." + command_syntax_key)
-        )
-            .replace("{alias}", alias)
-            .replaceAll("(?<!\\\\)&", "§")
-            .replace("\\&", "&");
+    public static Component commandSyntax(
+        String command,
+        Invocation invocation
+    ) {
+        String baseRoute = "command.commands." + command;
+        StringBuilder route = new StringBuilder(baseRoute);
+
+        for (String args : invocation.arguments()) {
+            route.append(".args.").append(args);
+        }
+
+        route.append(".syntax");
+        String message = loadedLocale.getString(route.toString());
+        if (message == null) {
+            message = loadedLocale.getString(baseRoute + ".syntax");
+        }
+
+        message = message.replace("{alias}", invocation.alias());
+
+        if (invocation instanceof Player) {
+            message = message.replaceAll("(?<!\\\\)&", "§").replace("\\&", "&");
+        } else {
+            message = message.replaceAll("(?<!\\\\)&.", "");
+        }
+
+        return Component.text(message);
     }
 
     public static String l(String key, Map<String, Object> placeholders) {
@@ -133,19 +158,26 @@ public class I18N {
     }
 
     public static List<String> handleSuggestion(String command, String[] args) {
-        try {
-            @SuppressWarnings("unchecked")
-            List<List<String>> cmdArgs = (List<
-                List<String>
-            >) loadedLocale.getList("command.args." + command);
+        CommandNode node = CommandBuilder.load(command);
 
-            if (args.length > cmdArgs.size()) return List.of();
-
-            if (args.length == 0) return cmdArgs.get(0);
-            return cmdArgs.get(args.length - 1);
-        } catch (ClassCastException e) {
-            plugin.getLogger().error("Config schema is wrong!", e);
+        if (node == null) {
             return List.of();
         }
+
+        for (int i = 0; i < args.length - 1; i++) {
+            node = node.children.get(args[i]);
+
+            if (node == null) {
+                return List.of();
+            }
+        }
+
+        String prefix = args.length == 0 ? "" : args[args.length - 1];
+
+        return node.children
+            .keySet()
+            .stream()
+            .filter(name -> name.startsWith(prefix))
+            .toList();
     }
 }
