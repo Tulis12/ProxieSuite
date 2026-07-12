@@ -1,4 +1,4 @@
-file_version: 17
+file_version: 19
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -35,6 +35,7 @@ command:
   general_error:
     only_player: "&cOnly players can use this command!"
     syntax: "&cYou used the command incorrectly! &7Usage:"
+    insufficient_permissions: "&cYou don't have permission for that."
 
   error:
     login:
@@ -44,47 +45,52 @@ command:
     register:
       you_already_registered: "&cYou already registered! Use /login"
       password_do_not_match: "&cPasswords don't match!"
-      password_is_password: "&7Please don't use &npassword &r&7 as your password!"
+      password_is_password: "&7Please don't use &npassword&r&7 as your password!"
+    proxiesuite:
+      reload: "&cThere was an error during reloading the config, please check the logs for more info."
 
   success:
     login: "&2You sucessfully logged in! Redirecting..."
+    proxiesuite:
+      reload: "&2Successfully reloaded config!"
 
   joke:
     register:
-      password_is_password: I didn't mean password as in &npassword&r&7, please be a little bit more creative...
+      password_is_password: "&7I didn't mean password as in &npassword&r&7, please be a little bit more creative..."
 
   commands:
-    register:
-      syntax: "/{alias} <password> <repeat this password>"
-      args:
-        - password:
-            name: password
-            args:
-              - password:
-                  name: password
+    # register:
+    #   syntax: "/{alias} <password> <repeat this password>"
+    #   args:
+    #     - password:
+    #       name: password
+    #       args:
+    #         - password:
+    #           name: password
 
-    login:
-      syntax: "/{alias} <password>"
-      args:
-        - password:
-            name: password
+    # login:
+    #   syntax: "/{alias} <password>"
+    #   args:
+    #     - password:
+    #       name: password
 
-    proxiesuite:
-      syntax: "/{alias} <reload|admin> [PARAMS]"
-      args:
-        - reload:
-            name: reload
-        - permissions:
-            syntax: "/{alias} permissions <add|remove> [PARAMS]"
-            name: permissions
-            args:
-              - add:
-                  name: test
-              - remove:
-                  name: test2
-                  args:
-                    - add:
-                        name: add
+    # for the future to make this i18n-able
+
+    # proxiesuite:
+    #   syntax: "/{alias} <reload|admin> [PARAMS]"
+    #   permission: "proxiesuite.admin"
+    #   args:
+    #     - name: reload
+    #       permission: "proxiesuite.admin.reload"
+
+    #     - name: permissions
+    #       permission: "proxiesuite.everyone"
+    #       args:
+    #         - name: test
+    #         - name: test2
+    #           args:
+    #             - name: add
+    #               params: players
 
 event:
   error:

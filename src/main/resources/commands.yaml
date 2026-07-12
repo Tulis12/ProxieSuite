@@ -1,0 +1,17 @@
+commands:
+  proxiesuite:
+    syntax: "/{alias} <reload|admin> [PARAMS]"
+    permission: "proxiesuite.admin"
+    args:
+      - name: reload
+        permission: "proxiesuite.admin.reload"
+
+      - name: permissions
+        permission: "proxiesuite.everyone"
+        args:
+          - name: test
+            params: dummy
+          - name: test2
+            args:
+              - name: add
+                params: players

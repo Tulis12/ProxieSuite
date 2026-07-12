@@ -166,8 +166,12 @@ public class I18N {
         return msg;
     }
 
-    public static List<String> handleSuggestion(String command, String[] args) {
-        CommandNode node = CommandBuilder.load(command);
+    public static List<String> handleSuggestion(
+        String command,
+        Invocation invocation
+    ) {
+        CommandNode node = CommandBuilder.load(command, invocation.source());
+        String[] args = invocation.arguments();
 
         if (node == null) {
             return List.of();

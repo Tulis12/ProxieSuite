@@ -15,6 +15,7 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import dev.tulis.proxieSuite.API.LogFilter;
 import dev.tulis.proxieSuite.Administration.ProxieSuite;
+import dev.tulis.proxieSuite.CommandUtils.CommandBuilder;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.VPNDetection.VPN;
@@ -54,6 +55,7 @@ public class Main {
 
         new Login(this);
         new ProxieSuite(this);
+        new CommandBuilder(this);
     }
 
     @Inject

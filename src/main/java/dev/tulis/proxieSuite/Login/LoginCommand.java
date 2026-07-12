@@ -112,7 +112,6 @@ public final class LoginCommand implements SimpleCommand {
 
     @Override
     public List<String> suggest(Invocation invocation) {
-        String[] args = invocation.arguments();
-        return I18N.handleSuggestion("login", args);
+        return I18N.handleSuggestion("login", invocation);
     }
 }

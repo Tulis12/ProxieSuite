@@ -136,7 +136,6 @@ public final class RegisterCommand implements SimpleCommand {
 
     @Override
     public List<String> suggest(Invocation invocation) {
-        String[] args = invocation.arguments();
-        return I18N.handleSuggestion("register", args);
+        return I18N.handleSuggestion("register", invocation);
     }
 }
