@@ -116,3 +116,7 @@ server*/
 # Nextcloud sync in my case (really useful XD)
 .sync-exclude.lst
 .idea
+
+run_*.ps1
+# I switched to Linux!
+run_*.sh
