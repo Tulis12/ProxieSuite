@@ -78,6 +78,18 @@ public class I18N {
         }
     }
 
+    public static void sendMessage(
+        CommandSource source,
+        String msg,
+        Map<String, Object> placeholders
+    ) {
+        if (source instanceof Player) {
+            source.sendMessage(Component.text(l(msg, placeholders)));
+        } else {
+            source.sendMessage(Component.text(l_console(msg, placeholders)));
+        }
+    }
+
     public static String l_console(String key) {
         return loadedLocale.getString(key).replaceAll("(?<!\\\\)&.", "");
     }
