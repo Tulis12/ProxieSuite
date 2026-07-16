@@ -36,6 +36,7 @@ command:
     only_player: "&cOnly players can use this command!"
     syntax: "&cYou used the command incorrectly! &7Usage:"
     insufficient_permissions: "&cYou don't have permission for that."
+    server_error: "&4Sorry, but there was an error in the server when processing your request. Please try again later."
 
   error:
     login:
@@ -48,10 +49,13 @@ command:
       password_is_password: "&7Please don't use &npassword&r&7 as your password!"
     proxiesuite:
       reload: "&cThere was an error during reloading the config, please check the logs for more info."
+    premium:
+      you_are_already_premium: "&7You are already logged in premium account."
 
   syntax:
     login: "/{alias} <password>"
     register: "/{alias} <password> <repeat that password>"
+    premium: "/{alias} confirm"
 
   info:
     proxiesuite:
@@ -61,11 +65,18 @@ command:
     register:
       password: "password"
       repeat_password: "repeat password"
+    premium:
+      are_you_sure: "&7Are you sure you want to enable &5PREMIUM &7mode? &7This action is &7irreversible. &7You will only be able to join with your premium &7account &7from now on. Type &5/premium confirm&7 to continue."
 
   success:
     login: "&2You sucessfully logged in! Redirecting..."
     proxiesuite:
       reload: "&2Successfully reloaded config!"
+    premium: |
+      &5Premium login has been enabled!
+
+      &7Rejoin the server using a premium account and
+      you will be logged in automatically!
 
   joke:
     register:
@@ -75,3 +86,7 @@ event:
   error:
     change_server:
       not_logged_in: "&cYou are not logged in!"
+
+  info:
+    legacy_join:
+      propose_premium: "&7Have a &5premium account? &7Enable premium login with &5/premium &7and log in without needing to enter a password."

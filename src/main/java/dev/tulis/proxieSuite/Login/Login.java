@@ -41,5 +41,6 @@ public class Login {
 
         new LoginCommand(plugin);
         new RegisterCommand(plugin);
+        new Premium(plugin);
     }
 }
