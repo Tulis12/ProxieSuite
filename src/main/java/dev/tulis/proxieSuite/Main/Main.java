@@ -18,6 +18,7 @@ import dev.tulis.proxieSuite.Administration.ProxieSuite;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.Login.StateManager;
+import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.VPNDetection.VPN;
 import dev.tulis.proxieSuite.i18n.I18N;
 import java.io.File;
@@ -56,6 +57,7 @@ public class Main {
         new Login(this);
         new ProxieSuite(this);
         new StateManager(this);
+        new PlayerCache(this);
     }
 
     @Inject
