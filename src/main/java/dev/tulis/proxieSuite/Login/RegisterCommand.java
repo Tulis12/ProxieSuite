@@ -51,7 +51,7 @@ public final class RegisterCommand implements SimpleCommand {
         Player p = (Player) source;
 
         if (
-            StateManager.getPlayerState(p.getUniqueId()) ==
+            StateManager.getPlayerState(p.getUsername()) ==
             PlayerState.AUTHENTICATED
         ) {
             p.sendMessage(
@@ -129,7 +129,7 @@ public final class RegisterCommand implements SimpleCommand {
 
         Player p = (Player) invocation.source();
         if (
-            StateManager.getPlayerState(p.getUniqueId()) ==
+            StateManager.getPlayerState(p.getUsername()) ==
             PlayerState.AUTHENTICATED
         ) return false;
 

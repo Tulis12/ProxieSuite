@@ -23,7 +23,7 @@ public class ServerPreConnectHandler {
 
         try {
             PlayerState state = StateManager.getPlayerState(
-                event.getPlayer().getUniqueId()
+                event.getPlayer().getUsername()
             );
 
             if (state == PlayerState.AUTHENTICATED) {

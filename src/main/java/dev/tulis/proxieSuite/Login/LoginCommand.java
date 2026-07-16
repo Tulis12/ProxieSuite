@@ -48,7 +48,7 @@ public final class LoginCommand implements SimpleCommand {
         Player p = (Player) source;
 
         if (
-            StateManager.getPlayerState(p.getUniqueId()) ==
+            StateManager.getPlayerState(p.getUsername()) ==
             PlayerState.AUTHENTICATED
         ) {
             p.sendMessage(
@@ -95,7 +95,7 @@ public final class LoginCommand implements SimpleCommand {
             .orElseThrow();
 
         p.sendMessage(Component.text(I18N.l("command.success.login")));
-        StateManager.setPlayerState(p.getUniqueId(), PlayerState.AUTHENTICATED);
+        StateManager.setPlayerState(p.getUsername(), PlayerState.AUTHENTICATED);
         p.createConnectionRequest(login).fireAndForget();
     }
 
@@ -105,7 +105,7 @@ public final class LoginCommand implements SimpleCommand {
 
         Player p = (Player) invocation.source();
         if (
-            StateManager.getPlayerState(p.getUniqueId()) ==
+            StateManager.getPlayerState(p.getUsername()) ==
             PlayerState.AUTHENTICATED
         ) return false;
 

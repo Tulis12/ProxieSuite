@@ -5,22 +5,23 @@ import java.util.UUID;
 
 public class StateManager {
 
-    private static HashMap<UUID, PlayerState> states = new HashMap<>();
+    private static HashMap<String, PlayerState> states = new HashMap<>();
 
     public static enum PlayerState {
         AUTHENTICATED,
         UNAUTHENTICATED,
+        UNAUTHENTICATED_LEGACY,
     }
 
-    public static PlayerState getPlayerState(UUID uuid) {
-        return states.getOrDefault(uuid, PlayerState.UNAUTHENTICATED);
+    public static PlayerState getPlayerState(String username) {
+        return states.getOrDefault(username, PlayerState.UNAUTHENTICATED);
     }
 
-    public static void setPlayerState(UUID uuid, PlayerState state) {
-        states.put(uuid, state);
+    public static void setPlayerState(String username, PlayerState state) {
+        states.put(username, state);
     }
 
-    public static void removePlayer(UUID uuid) {
-        states.remove(uuid);
+    public static void removePlayer(String username) {
+        states.remove(username);
     }
 }
