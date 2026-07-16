@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
 
+@Deprecated
 @SuppressWarnings("unchecked")
 public class CommandBuilder {
 

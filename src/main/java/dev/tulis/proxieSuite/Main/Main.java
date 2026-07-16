@@ -55,7 +55,6 @@ public class Main {
 
         new Login(this);
         new ProxieSuite(this);
-        new CommandBuilder(this);
     }
 
     @Inject

@@ -3,6 +3,7 @@ package dev.tulis.proxieSuite.CommandUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class CommandNode {
 
     public Map<String, CommandNode> children = new HashMap<>();
