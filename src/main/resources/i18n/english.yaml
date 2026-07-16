@@ -1,4 +1,4 @@
-file_version: 19
+file_version: 21
 kick:
   vpn_abuse: |
     &5[VPN Usage Detected]
@@ -49,6 +49,19 @@ command:
     proxiesuite:
       reload: "&cThere was an error during reloading the config, please check the logs for more info."
 
+  syntax:
+    login: "/{alias} <password>"
+    register: "/{alias} <password> <repeat that password>"
+
+  info:
+    proxiesuite:
+      version: "&7This server uses &5ProxieSuite &7version: {version}"
+    login:
+      password: "password"
+    register:
+      password: "password"
+      repeat_password: "repeat password"
+
   success:
     login: "&2You sucessfully logged in! Redirecting..."
     proxiesuite:
@@ -57,40 +70,6 @@ command:
   joke:
     register:
       password_is_password: "&7I didn't mean password as in &npassword&r&7, please be a little bit more creative..."
-
-  commands:
-    # register:
-    #   syntax: "/{alias} <password> <repeat this password>"
-    #   args:
-    #     - password:
-    #       name: password
-    #       args:
-    #         - password:
-    #           name: password
-
-    # login:
-    #   syntax: "/{alias} <password>"
-    #   args:
-    #     - password:
-    #       name: password
-
-    # for the future to make this i18n-able
-
-    # proxiesuite:
-    #   syntax: "/{alias} <reload|admin> [PARAMS]"
-    #   permission: "proxiesuite.admin"
-    #   args:
-    #     - name: reload
-    #       permission: "proxiesuite.admin.reload"
-
-    #     - name: permissions
-    #       permission: "proxiesuite.everyone"
-    #       args:
-    #         - name: test
-    #         - name: test2
-    #           args:
-    #             - name: add
-    #               params: players
 
 event:
   error:

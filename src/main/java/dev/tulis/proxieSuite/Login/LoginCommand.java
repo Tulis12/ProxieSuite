@@ -61,7 +61,9 @@ public final class LoginCommand implements SimpleCommand {
         }
 
         if (args.length != 1) {
-            p.sendMessage(I18N.commandSyntax("login", invocation));
+            p.sendMessage(
+                I18N.commandSyntax("command.syntax.login", invocation)
+            );
 
             return;
         }
@@ -112,6 +114,11 @@ public final class LoginCommand implements SimpleCommand {
 
     @Override
     public List<String> suggest(Invocation invocation) {
-        return I18N.handleSuggestion("login", invocation);
+        String[] args = invocation.arguments();
+        if (args.length <= 1) return List.of(
+            I18N.l("command.info.login.password")
+        );
+
+        return List.of();
     }
 }

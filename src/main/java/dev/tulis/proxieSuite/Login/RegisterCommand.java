@@ -64,7 +64,9 @@ public final class RegisterCommand implements SimpleCommand {
         }
 
         if (args.length != 2) {
-            p.sendMessage(I18N.commandSyntax("register", invocation));
+            p.sendMessage(
+                I18N.commandSyntax("command.syntax.register", invocation)
+            );
 
             return;
         }
@@ -136,6 +138,15 @@ public final class RegisterCommand implements SimpleCommand {
 
     @Override
     public List<String> suggest(Invocation invocation) {
-        return I18N.handleSuggestion("register", invocation);
+        String[] args = invocation.arguments();
+        if (args.length <= 1) return List.of(
+            I18N.l("command.info.register.password")
+        );
+
+        if (args.length <= 2) return List.of(
+            I18N.l("command.info.register.repeat_password")
+        );
+
+        return List.of();
     }
 }

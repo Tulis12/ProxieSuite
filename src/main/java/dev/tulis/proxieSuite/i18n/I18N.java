@@ -9,13 +9,10 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
-import dev.tulis.proxieSuite.CommandUtils.CommandBuilder;
-import dev.tulis.proxieSuite.CommandUtils.CommandNode;
 import dev.tulis.proxieSuite.Main.Main;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
@@ -101,22 +98,8 @@ public class I18N {
             .replace("\\&", "&");
     }
 
-    public static Component commandSyntax(
-        String command,
-        Invocation invocation
-    ) {
-        String baseRoute = "command.commands." + command;
-        StringBuilder route = new StringBuilder(baseRoute);
-
-        for (String args : invocation.arguments()) {
-            route.append(".args.").append(args);
-        }
-
-        route.append(".syntax");
-        String message = loadedLocale.getString(route.toString());
-        if (message == null) {
-            message = loadedLocale.getString(baseRoute + ".syntax");
-        }
+    public static Component commandSyntax(String key, Invocation invocation) {
+        String message = loadedLocale.getString(key);
 
         message = message.replace("{alias}", invocation.alias());
 
@@ -176,33 +159,5 @@ public class I18N {
         }
 
         return msg;
-    }
-
-    public static List<String> handleSuggestion(
-        String command,
-        Invocation invocation
-    ) {
-        CommandNode node = CommandBuilder.load(command, invocation.source());
-        String[] args = invocation.arguments();
-
-        if (node == null) {
-            return List.of();
-        }
-
-        for (int i = 0; i < args.length - 1; i++) {
-            node = node.children.get(args[i]);
-
-            if (node == null) {
-                return List.of();
-            }
-        }
-
-        String prefix = args.length == 0 ? "" : args[args.length - 1];
-
-        return node.children
-            .keySet()
-            .stream()
-            .filter(name -> name.startsWith(prefix))
-            .toList();
     }
 }
