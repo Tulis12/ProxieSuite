@@ -17,6 +17,7 @@ import dev.tulis.proxieSuite.API.GetAllPlayers;
 import dev.tulis.proxieSuite.API.LogFilter;
 import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
+import dev.tulis.proxieSuite.Events.PreLoginHandler;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.Login.StateManager;
 import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
@@ -61,6 +62,8 @@ public class Main {
         new PlayerSession(this);
 
         new GetAllPlayers(this);
+
+        proxy.getEventManager().register(this, new PreLoginHandler(this));
     }
 
     @Inject
