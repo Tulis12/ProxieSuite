@@ -13,6 +13,7 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import dev.tulis.proxieSuite.API.GetAllPlayers;
 import dev.tulis.proxieSuite.API.LogFilter;
 import dev.tulis.proxieSuite.Administration.ProxieSuite;
 import dev.tulis.proxieSuite.Database.Database;
@@ -58,6 +59,8 @@ public class Main {
         new ProxieSuite(this);
         new StateManager(this);
         new PlayerCache(this);
+
+        new GetAllPlayers(this);
     }
 
     @Inject
