@@ -76,10 +76,11 @@ public class PreLoginHandler {
         boolean onlineauth = false;
         boolean joined = false;
         boolean onlineAccountExists = false;
+        String password = null;
 
         try (Connection conn = Database.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(
-                "SELECT onlineauth, online_account_exists FROM proxie_players WHERE username = ?"
+                "SELECT onlineauth, online_account_exists, password FROM proxie_players WHERE username = ?"
             );
 
             statement.setString(1, username);
@@ -88,6 +89,7 @@ public class PreLoginHandler {
             if (set.next()) {
                 onlineauth = set.getBoolean("onlineauth");
                 onlineAccountExists = set.getBoolean("online_account_exists");
+                password = set.getString("password");
                 joined = true;
             }
         } catch (SQLException e) {
@@ -101,6 +103,7 @@ public class PreLoginHandler {
         }
 
         PlayerCache.put(username, "joinedBefore", joined);
+        PlayerCache.put(username, "password", password);
 
         if (uuid != null) {
             int version = uuid.version();

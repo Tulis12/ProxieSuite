@@ -70,6 +70,7 @@ command:
 
   success:
     login: "&2You sucessfully logged in! Redirecting..."
+    register: "&2You sucessfully registered! Welcome!"
     proxiesuite:
       reload: "&2Successfully reloaded config!"
     premium: |
@@ -88,5 +89,8 @@ event:
       not_logged_in: "&cYou are not logged in!"
 
   info:
+    join:
+      login: "&7Login using /login <password>"
+      register: "&7Register using /register <password> <repeat that password>"
     legacy_join:
       propose_premium: "&7Have a &5premium account? &7Enable premium login with &5/premium &7and log in without needing to enter a password."

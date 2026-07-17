@@ -8,6 +8,7 @@ import com.velocitypowered.api.proxy.Player;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
+import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.i18n.I18N;
 import dev.tulis.proxieSuite.i18n.Jokes;
 import java.sql.Connection;
@@ -121,6 +122,8 @@ public final class RegisterCommand implements SimpleCommand {
         } catch (SQLException e) {
             e.printStackTrace();
         } // TODO: robust logging
+
+        p.sendMessage(Component.text(I18N.l("command.success.register")));
     }
 
     @Override
@@ -130,7 +133,8 @@ public final class RegisterCommand implements SimpleCommand {
         Player p = (Player) invocation.source();
         if (
             StateManager.getPlayerState(p.getUsername()) ==
-            PlayerState.AUTHENTICATED
+                PlayerState.AUTHENTICATED ||
+            PlayerCache.getAs(p.getUsername(), "password", String.class) != null
         ) return false;
 
         return true;

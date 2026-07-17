@@ -2,11 +2,7 @@ package dev.tulis.proxieSuite.Login;
 
 import com.password4j.Hash;
 import com.password4j.Password;
-import dev.tulis.proxieSuite.Database.Database;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 
 public class PasswordManager {
 
@@ -19,29 +15,17 @@ public class PasswordManager {
         String password,
         String username
     ) {
-        try (Connection conn = Database.getConnection()) {
-            PreparedStatement statement = conn.prepareStatement(
-                "SELECT password FROM proxie_players WHERE username = ?"
-            );
-            statement.setString(1, username);
+        String cached_password = PlayerCache.getAs(
+            username,
+            "password",
+            String.class
+        );
 
-            ResultSet set = statement.executeQuery();
-            if (!set.next()) return PasswordState.NOT_REGISTERED;
-            if (
-                set.getString("password") == null
-            ) return PasswordState.NOT_REGISTERED;
+        if (cached_password == null) return PasswordState.NOT_REGISTERED;
 
-            boolean verify = Password.check(
-                password,
-                set.getString("password")
-            ).withArgon2();
-
-            return verify ? PasswordState.CORRECT : PasswordState.INCORRECT;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } // TODO: Robust logging
-
-        return PasswordState.INCORRECT;
+        return Password.check(password, cached_password).withArgon2()
+            ? PasswordState.CORRECT
+            : PasswordState.INCORRECT;
     }
 
     public static enum PasswordState {
