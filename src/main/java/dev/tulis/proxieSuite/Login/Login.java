@@ -32,11 +32,6 @@ public class Login {
         plugin
             .getProxy()
             .getEventManager()
-            .register(plugin, new PreLoginHandler(plugin));
-
-        plugin
-            .getProxy()
-            .getEventManager()
             .register(plugin, new ChooseInitialServerHandler(plugin));
 
         new LoginCommand(plugin);
