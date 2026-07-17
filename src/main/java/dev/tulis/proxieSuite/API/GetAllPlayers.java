@@ -29,7 +29,15 @@ public class GetAllPlayers {
 
         try (Connection conn = Database.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(
-                "SELECT username FROM proxie_players"
+                """
+                SELECT
+                    username
+                FROM
+                    proxie_players
+                    LEFT JOIN proxie_bans ON
+                    proxie_players.id = proxie_bans.player_id
+                WHERE proxie_bans.id IS NULL OR proxie_bans.active = 0;
+                """
             );
 
             ResultSet set = statement.executeQuery();
