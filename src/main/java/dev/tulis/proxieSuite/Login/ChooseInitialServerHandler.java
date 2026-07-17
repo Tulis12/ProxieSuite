@@ -4,10 +4,10 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.i18n.I18N;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,8 +93,11 @@ public class ChooseInitialServerHandler {
             state == PlayerState.UNAUTHENTICATED_LEGACY_FIRST_JOIN
         ) {
             if (
-                PlayerCache.getAs(p.getUsername(), "password", String.class) !=
-                null
+                PlayerSession.getAs(
+                    p.getUsername(),
+                    "password",
+                    String.class
+                ) != null
             ) {
                 I18N.sendMessage(p, "event.info.join.login");
             } else {

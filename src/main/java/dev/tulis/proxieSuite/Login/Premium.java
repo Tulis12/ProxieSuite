@@ -5,9 +5,9 @@ import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.i18n.I18N;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +32,7 @@ public final class Premium implements SimpleCommand {
     }
 
     private boolean ensurePremiumAvaliable(String username) {
-        Boolean onlineAccountExists = PlayerCache.getAs(
+        Boolean onlineAccountExists = PlayerSession.getAs(
             username,
             "onlineAccountExists",
             Boolean.class

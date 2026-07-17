@@ -2,7 +2,7 @@ package dev.tulis.proxieSuite.Login;
 
 import com.password4j.Hash;
 import com.password4j.Password;
-import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
+import dev.tulis.proxieSuite.API.PlayerSession;
 
 public class PasswordManager {
 
@@ -15,7 +15,7 @@ public class PasswordManager {
         String password,
         String username
     ) {
-        String cached_password = PlayerCache.getAs(
+        String cached_password = PlayerSession.getAs(
             username,
             "password",
             String.class

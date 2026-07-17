@@ -5,10 +5,10 @@ import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
 import dev.tulis.proxieSuite.Main.Main;
-import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.i18n.I18N;
 import dev.tulis.proxieSuite.i18n.Jokes;
 import java.sql.Connection;
@@ -134,7 +134,8 @@ public final class RegisterCommand implements SimpleCommand {
         if (
             StateManager.getPlayerState(p.getUsername()) ==
                 PlayerState.AUTHENTICATED ||
-            PlayerCache.getAs(p.getUsername(), "password", String.class) != null
+            PlayerSession.getAs(p.getUsername(), "password", String.class) !=
+                null
         ) return false;
 
         return true;

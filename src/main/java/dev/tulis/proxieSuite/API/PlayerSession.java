@@ -1,16 +1,16 @@
-package dev.tulis.proxieSuite.PlayerCache;
+package dev.tulis.proxieSuite.API;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import dev.tulis.proxieSuite.Main.Main;
 import java.util.HashMap;
 
-public class PlayerCache {
+public class PlayerSession {
 
     private static HashMap<String, HashMap<String, Object>> playerCache =
         new HashMap<>();
 
-    public PlayerCache(Main m) {
+    public PlayerSession(Main m) {
         m.getProxy().getEventManager().register(m, this);
     }
 
