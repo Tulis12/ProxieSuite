@@ -60,6 +60,7 @@ public class Main {
         new ProxieSuite(this);
         new StateManager(this);
         new PlayerSession(this);
+        new LogFilter(this);
 
         new GetAllPlayers(this);
 

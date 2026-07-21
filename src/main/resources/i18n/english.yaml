@@ -1,5 +1,26 @@
 file_version: 21
+
+kick_console:
+  tempban: "tempbanned reason: {1} by: {2} for: {3} ends at: {4}"
+  ban: "banned; Reason: {1}; Banned by: {2}"
+  nonpremium_logged_as_premium: "asd"
+
 kick:
+  tempban: |
+    &5You are banned!
+
+    &7Reason: &5{reason}
+    &7by: {bannedBy}
+
+    &7You are banned for: {end}
+    &7You will be unbanned at: {endDate}
+
+  ban: |
+    &5You are banned &5pernamently!
+
+    &7Reason: &5{reason}
+    &7by: {bannedBy}
+
   vpn_abuse: |
     &5[VPN Usage Detected]
     &7Joining with &5VPNs&7 is not allowed on this server.
@@ -30,6 +51,7 @@ kick:
     server side broke down and started crying.
 
     The admins got notified of this, and you should try sometime again soon.
+  default_ban_reason: "Banned by the administrator."
 
 command:
   general_error:

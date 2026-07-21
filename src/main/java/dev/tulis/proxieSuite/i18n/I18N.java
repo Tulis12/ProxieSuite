@@ -4,17 +4,21 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand.Invocation;
 import com.velocitypowered.api.proxy.Player;
 import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import dev.tulis.proxieSuite.API.ColorsAPI;
 import dev.tulis.proxieSuite.Main.Main;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 
@@ -36,6 +40,10 @@ public class I18N {
 
         locale = plugin.getConfig().getString("locale");
         load();
+    }
+
+    public static boolean ready() {
+        return loadedLocale != null;
     }
 
     public void load() {
@@ -95,8 +103,33 @@ public class I18N {
         p.sendMessage(Component.text(l(msg, placeholders)));
     }
 
+    public static String matchesKick(String text) {
+        Section kick = loadedLocale.getSection("kick");
+
+        for (Object key : kick.getKeys()) {
+            String regex = ColorsAPI.stripColors(kick.getString((String) key));
+
+            regex = regex.replaceAll("([\\\\.^$|?*+()\\[\\]])", "\\\\$1");
+            regex = regex.replaceAll("\\{[^}]+\\}", "(.*)");
+
+            Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+            Matcher matcher = pattern.matcher(ColorsAPI.stripColors(text));
+
+            if (matcher.matches()) {
+                String newMsg = loadedLocale.getString("kick_console." + key);
+                for (int i = 1; i <= matcher.groupCount(); i++) {
+                    newMsg = newMsg.replace("{" + i + "}", matcher.group(i));
+                }
+
+                return newMsg;
+            }
+        }
+
+        return null;
+    }
+
     public static String l_console(String key) {
-        return loadedLocale.getString(key).replaceAll("(?<!\\\\)&.", "");
+        return ColorsAPI.stripColors(loadedLocale.getString(key));
     }
 
     public static String l(String key) {
