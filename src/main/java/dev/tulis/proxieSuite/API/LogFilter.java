@@ -28,7 +28,7 @@ public class LogFilter extends AbstractFilter {
     }
 
     String regex =
-        "\\[(initial connection|connected player)\\] (/\\d+\\.\\d+\\.\\d+\\.\\d+):\\d+ has disconnected: (.*)";
+        "\\[(initial connection|connected player)\\] +(?:.*?) ??\\(?(/\\d+\\.\\d+\\.\\d+\\.\\d+):\\d+\\)? has disconnected: (.*)";
     Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
 
     @Override
