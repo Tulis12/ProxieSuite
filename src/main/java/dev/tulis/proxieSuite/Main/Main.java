@@ -16,11 +16,11 @@ import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import dev.tulis.proxieSuite.API.GetAllPlayers;
 import dev.tulis.proxieSuite.API.LogFilter;
 import dev.tulis.proxieSuite.API.PlayerSession;
+import dev.tulis.proxieSuite.Administration.Administration;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Events.PreLoginHandler;
 import dev.tulis.proxieSuite.Login.Login;
 import dev.tulis.proxieSuite.Login.StateManager;
-import dev.tulis.proxieSuite.PlayerCache.PlayerCache;
 import dev.tulis.proxieSuite.VPNDetection.VPN;
 import dev.tulis.proxieSuite.i18n.I18N;
 import java.io.File;
@@ -57,7 +57,7 @@ public class Main {
         new I18N(this);
 
         new Login(this);
-        new ProxieSuite(this);
+        new Administration(this);
         new StateManager(this);
         new PlayerSession(this);
         new LogFilter(this);

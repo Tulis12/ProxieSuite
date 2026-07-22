@@ -36,7 +36,7 @@ public class GetAllPlayers {
                     proxie_players
                     LEFT JOIN proxie_bans ON
                     proxie_players.id = proxie_bans.player_id
-                WHERE proxie_bans.id IS NULL OR proxie_bans.active = 0;
+                WHERE proxie_bans.id IS NULL OR (proxie_bans.end IS NOT NULL AND CURRENT_TIMESTAMP() > proxie_bans.end);
                 """
             );
 

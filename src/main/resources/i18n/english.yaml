@@ -3,7 +3,9 @@ file_version: 21
 kick_console:
   tempban: "tempbanned reason: {1} by: {2} for: {3} ends at: {4}"
   ban: "banned; Reason: {1}; Banned by: {2}"
-  nonpremium_logged_as_premium: "asd"
+
+utils:
+  console: "Console"
 
 kick:
   tempban: |

@@ -3,6 +3,7 @@ package dev.tulis.proxieSuite.Events;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import dev.tulis.proxieSuite.API.PlayerSession;
+import dev.tulis.proxieSuite.Administration.BanAPI;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.LoginPreLoginHandler;
 import dev.tulis.proxieSuite.Main.Main;
@@ -50,6 +51,8 @@ public class PreLoginHandler {
     @Subscribe
     public void onHandshake(PreLoginEvent event) {
         String username = event.getUsername();
+
+        if (BanAPI.handlePreLogin(event)) return;
 
         boolean onlineauth = false;
         boolean joined = false;

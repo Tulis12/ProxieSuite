@@ -1,14 +1,16 @@
 package dev.tulis.proxieSuite.Administration;
 
+import dev.tulis.proxieSuite.Administration.ProxieSuite.ProxieSuiteCommand;
 import dev.tulis.proxieSuite.Main.Main;
 
-public class ProxieSuite {
+public class Administration {
 
     private Main plugin;
 
-    public ProxieSuite(Main m) {
+    public Administration(Main m) {
         plugin = m;
 
         new ProxieSuiteCommand(plugin);
+        new BanAPI(plugin);
     }
 }
