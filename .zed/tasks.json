@@ -1,0 +1,8 @@
+[
+    {
+        "label": "Package",
+        "command": "mvn package",
+        "use_new_terminal": false,
+        "reveal": "always"
+    }
+]
