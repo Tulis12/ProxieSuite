@@ -5,8 +5,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashSet;
 import lombok.Getter;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -43,6 +47,31 @@ public class VPN {
             .schedule();
     }
 
+    public static void deleteDirectory(Path path) throws IOException {
+        Files.walkFileTree(
+            path,
+            new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult visitFile(
+                    Path file,
+                    BasicFileAttributes attrs
+                ) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(
+                    Path dir,
+                    IOException exc
+                ) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            }
+        );
+    }
+
     private void fetchRepo() {
         String repoUrl = plugin.getConfig().getString("vpn.is_vpn_repo");
         Path localPath = plugin.getDataDirectory().resolve("vpn_detection");
@@ -54,6 +83,10 @@ public class VPN {
                 !localRepo.exists() ||
                 !localPath.resolve(".git").toFile().exists()
             ) {
+                if (localRepo.exists()) {
+                    deleteDirectory(localPath);
+                }
+
                 System.out.println("Klonowanie VPN...");
                 Git.cloneRepository()
                     .setURI(repoUrl)
