@@ -152,6 +152,7 @@ public class BanAPI {
                 String player = set.getString("player");
                 String bannedBy = set.getString("banned_by");
                 String reason = set.getString("reason");
+
                 LocalDateTime start =
                     set.getTimestamp("start") != null
                         ? set.getTimestamp("start").toLocalDateTime()
@@ -198,7 +199,7 @@ public class BanAPI {
                     reason,
 
                     "bannedBy",
-                    bannedBy
+                    bannedBy == null ? I18N.l("utils.console") : bannedBy
                 );
 
                 reasonComponent = Component.text(
@@ -210,7 +211,7 @@ public class BanAPI {
                     reason,
 
                     "bannedBy",
-                    bannedBy,
+                    bannedBy == null ? I18N.l("utils.console") : bannedBy,
 
                     "end",
                     end
