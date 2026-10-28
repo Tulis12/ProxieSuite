@@ -80,6 +80,7 @@ command:
     login: "/{alias} <password>"
     register: "/{alias} <password> <repeat that password>"
     premium: "/{alias} confirm"
+    proxie: "/{alias} <tempban | ban | reload | version | clientdump>"
 
   info:
     proxiesuite:

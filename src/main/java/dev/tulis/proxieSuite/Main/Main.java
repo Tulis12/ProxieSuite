@@ -26,6 +26,8 @@ import dev.tulis.proxieSuite.i18n.I18N;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.Getter;
@@ -39,6 +41,9 @@ public class Main {
 
     @Getter
     private YamlDocument config;
+
+    @Getter
+    private DateTimeFormatter formatter;
 
     @Getter
     private ProxyServer proxy;
@@ -98,6 +103,10 @@ public class Main {
 
             config.update();
             config.save();
+
+            formatter = DateTimeFormatter.ofPattern(
+                "yyyy-MM-dd HH:mm:ss"
+            ).withZone(ZoneId.of(config.getString("timezone")));
         } catch (IOException e) {
             e.printStackTrace(); // TODO: More robust logging
             Optional<PluginContainer> container = server

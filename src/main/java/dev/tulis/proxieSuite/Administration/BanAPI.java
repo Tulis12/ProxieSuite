@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class BanAPI {
     private static Ban isBanned(String username) {
         if (!bans.containsKey(username)) return null;
 
-        LocalDateTime now = LocalDateTime.now();
+        Instant now = Instant.now();
 
         Ban ban = bans.get(username);
         if (ban.end == null) return ban;
@@ -56,24 +58,25 @@ public class BanAPI {
         }
 
         if (ban.end != null) {
-            LocalDateTime now = LocalDateTime.now();
+            ZonedDateTime now = Instant.now().atZone(ZoneId.systemDefault());
+            ZonedDateTime end = ban.end.atZone(ZoneId.systemDefault());
 
-            long years = ChronoUnit.YEARS.between(now, ban.end);
+            long years = ChronoUnit.YEARS.between(now, end);
             now = now.plusYears(years);
 
-            long months = ChronoUnit.MONTHS.between(now, ban.end);
+            long months = ChronoUnit.MONTHS.between(now, end);
             now = now.plusMonths(months);
 
-            long weeks = ChronoUnit.WEEKS.between(now, ban.end);
+            long weeks = ChronoUnit.WEEKS.between(now, end);
             now = now.plusWeeks(weeks);
 
-            long days = ChronoUnit.DAYS.between(now, ban.end);
+            long days = ChronoUnit.DAYS.between(now, end);
             now = now.plusDays(days);
 
-            long hours = ChronoUnit.HOURS.between(now, ban.end);
+            long hours = ChronoUnit.HOURS.between(now, end);
             now = now.plusHours(hours);
 
-            long minutes = ChronoUnit.MINUTES.between(now, ban.end);
+            long minutes = ChronoUnit.MINUTES.between(now, end);
 
             List<String> parts = new ArrayList<>();
 
@@ -84,18 +87,19 @@ public class BanAPI {
             if (hours > 0) parts.add(hours + " hours");
             if (minutes > 0) parts.add(minutes + " minutes");
 
+            if (parts.isEmpty()) {
+                parts.add("less than a minute");
+            }
+
             Map<String, Object> placeholders = Map.of(
                 "reason",
                 ban.reason,
-
                 "bannedBy",
                 ban.bannedBySafe,
-
                 "end",
                 String.join(" ", parts),
-
                 "endDate",
-                ban.end.format(formatter)
+                plugin.getFormatter().format(ban.end)
             );
 
             event.setResult(
@@ -153,14 +157,14 @@ public class BanAPI {
                 String bannedBy = set.getString("banned_by");
                 String reason = set.getString("reason");
 
-                LocalDateTime start =
+                Instant start =
                     set.getTimestamp("start") != null
-                        ? set.getTimestamp("start").toLocalDateTime()
+                        ? set.getTimestamp("start").toInstant()
                         : null;
 
-                LocalDateTime end =
+                Instant end =
                     set.getTimestamp("end") != null
-                        ? set.getTimestamp("end").toLocalDateTime()
+                        ? set.getTimestamp("end").toInstant()
                         : null;
 
                 bans.put(player, new Ban(player, bannedBy, reason, start, end));
@@ -184,7 +188,7 @@ public class BanAPI {
         String username,
         String bannedBy,
         String reason,
-        LocalDateTime end
+        Instant end
     ) {
         Integer playerId = null;
         Integer bannedById = null;
@@ -206,15 +210,50 @@ public class BanAPI {
                     I18N.l("kick.ban", placeholders)
                 );
             } else {
+                ZonedDateTime now = Instant.now().atZone(
+                    ZoneId.systemDefault()
+                );
+                ZonedDateTime endZoned = end.atZone(ZoneId.systemDefault());
+
+                long years = ChronoUnit.YEARS.between(now, endZoned);
+                now = now.plusYears(years);
+
+                long months = ChronoUnit.MONTHS.between(now, endZoned);
+                now = now.plusMonths(months);
+
+                long weeks = ChronoUnit.WEEKS.between(now, endZoned);
+                now = now.plusWeeks(weeks);
+
+                long days = ChronoUnit.DAYS.between(now, endZoned);
+                now = now.plusDays(days);
+
+                long hours = ChronoUnit.HOURS.between(now, endZoned);
+                now = now.plusHours(hours);
+
+                long minutes = ChronoUnit.MINUTES.between(now, endZoned);
+
+                List<String> parts = new ArrayList<>();
+
+                if (years > 0) parts.add(years + " years");
+                if (months > 0) parts.add(months + " months");
+                if (weeks > 0) parts.add(weeks + " weeks");
+                if (days > 0) parts.add(days + " days");
+                if (hours > 0) parts.add(hours + " hours");
+                if (minutes > 0) parts.add(minutes + " minutes");
+
+                if (parts.isEmpty()) {
+                    parts.add("less than a minute");
+                }
+
                 Map<String, Object> placeholders = Map.of(
                     "reason",
                     reason,
-
                     "bannedBy",
                     bannedBy == null ? I18N.l("utils.console") : bannedBy,
-
                     "end",
-                    end
+                    String.join(" ", parts),
+                    "endDate",
+                    plugin.getFormatter().format(end)
                 );
 
                 reasonComponent = Component.text(
@@ -262,7 +301,7 @@ public class BanAPI {
             statement.setObject(2, bannedById, Types.INTEGER);
             statement.setString(3, reason);
 
-            Timestamp timestamp = end != null ? Timestamp.valueOf(end) : null;
+            Timestamp timestamp = end != null ? Timestamp.from(end) : null;
             statement.setTimestamp(4, timestamp);
 
             statement.executeUpdate();
@@ -281,8 +320,8 @@ public class BanAPI {
             String username,
             String bannedBy,
             String reason,
-            LocalDateTime start,
-            LocalDateTime end
+            Instant start,
+            Instant end
         ) {
             this.username = username;
             this.bannedBy = bannedBy;
@@ -302,7 +341,7 @@ public class BanAPI {
         public String bannedBy;
         public String bannedBySafe;
         public String reason;
-        public LocalDateTime start;
-        public LocalDateTime end;
+        public Instant start;
+        public Instant end;
     }
 }

@@ -92,7 +92,9 @@ public final class Premium implements SimpleCommand {
                 return;
             }
 
-            p.sendMessage(I18N.commandSyntax("premium", invocation));
+            p.sendMessage(
+                I18N.commandSyntax("command.syntax.premium", invocation)
+            );
             return;
         }
 

@@ -139,18 +139,26 @@ public class I18N {
             .replace("\\&", "&");
     }
 
-    public static Component commandSyntax(String key, Invocation invocation) {
+    public static Component commandSyntax(
+        String key,
+        String alias,
+        CommandSource source
+    ) {
         String message = loadedLocale.getString(key);
 
-        message = message.replace("{alias}", invocation.alias());
+        message = message.replace("{alias}", alias);
 
-        if (invocation instanceof Player) {
+        if (source instanceof Player) {
             message = message.replaceAll("(?<!\\\\)&", "§").replace("\\&", "&");
         } else {
             message = message.replaceAll("(?<!\\\\)&.", "");
         }
 
         return Component.text(message);
+    }
+
+    public static Component commandSyntax(String key, Invocation invocation) {
+        return commandSyntax(key, invocation.alias(), invocation.source());
     }
 
     public static String l(String key, Map<String, Object> placeholders) {
