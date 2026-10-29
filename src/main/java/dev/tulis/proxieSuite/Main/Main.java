@@ -15,6 +15,7 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import dev.tulis.proxieSuite.API.GetAllPlayers;
 import dev.tulis.proxieSuite.API.LogFilter;
+import dev.tulis.proxieSuite.API.PlayerAPI;
 import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Administration.Administration;
 import dev.tulis.proxieSuite.Database.Database;
@@ -68,6 +69,7 @@ public class Main {
         new LogFilter(this);
 
         new GetAllPlayers(this);
+        new PlayerAPI(this);
 
         proxy.getEventManager().register(this, new PreLoginHandler(this));
     }

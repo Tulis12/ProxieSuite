@@ -2,10 +2,13 @@ package dev.tulis.proxieSuite.Database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import dev.tulis.proxieSuite.Database.Migrations.V1_CreatePlayersBans;
+import dev.tulis.proxieSuite.Database.Migrations.V2_Pardon;
 import dev.tulis.proxieSuite.Main.Main;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Database {
 
@@ -37,6 +40,16 @@ public class Database {
         hikariConfig.setValidationTimeout(5000);
         hikariConfig.setKeepaliveTime(30000);
         dataSource = new HikariDataSource(hikariConfig);
+
+        try (Connection connection = dataSource.getConnection()) {
+            Migrator.migrate(
+                connection,
+                List.of(new V1_CreatePlayersBans(), new V2_Pardon()),
+                plugin
+            );
+        } catch (SQLException e) {
+            plugin.getLogger().error("Database exception at migration!", e);
+        }
     }
 
     public static void closeConnection() {

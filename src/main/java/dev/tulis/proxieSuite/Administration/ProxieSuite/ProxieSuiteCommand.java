@@ -6,10 +6,8 @@ import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
 import dev.tulis.proxieSuite.Main.Main;
 import dev.tulis.proxieSuite.i18n.I18N;
-import net.kyori.adventure.text.Component;
 
 public final class ProxieSuiteCommand {
 
@@ -39,6 +37,7 @@ public final class ProxieSuiteCommand {
                 .then(Ban.banArgument())
                 .then(TempBan.tempBanArgument())
                 .then(ClientDump.clientDumpArgument())
+                .then(Pardon.pardonArgument())
                 .executes(ctx -> {
                     CommandSource source = ctx.getSource();
 

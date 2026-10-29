@@ -3,6 +3,7 @@ package dev.tulis.proxieSuite.Administration;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.event.connection.PreLoginEvent.PreLoginComponentResult;
 import com.velocitypowered.api.proxy.Player;
+import dev.tulis.proxieSuite.API.PlayerAPI;
 import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Main.Main;
@@ -16,7 +17,6 @@ import java.sql.Types;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +26,28 @@ import net.kyori.adventure.text.Component;
 
 public class BanAPI {
 
-    private static final DateTimeFormatter formatter =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
     private static HashMap<String, Ban> bans = new HashMap<>();
     private static Main plugin;
 
     public BanAPI(Main m) {
         plugin = m;
+        refreshCache();
+    }
+
+    public static void pardonPlayer(String username) {
+        try (Connection conn = Database.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(
+                """
+                UPDATE proxie_bans SET pardon = 1 WHERE player_id = ?
+                """
+            );
+
+            statement.setInt(1, PlayerAPI.getPlayerId(username));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: Logging
+        }
+
         refreshCache();
     }
 
@@ -146,7 +160,7 @@ public class BanAPI {
                     ON b.player_id = p.id
                 LEFT JOIN proxie_players bp
                     ON b.banned_by_id = bp.id
-                WHERE b.end IS NULL OR CURRENT_TIMESTAMP() < b.end
+                WHERE (b.end IS NULL OR CURRENT_TIMESTAMP() < b.end) AND b.pardon = 0
                 """
             );
 
@@ -343,5 +357,9 @@ public class BanAPI {
         public String reason;
         public Instant start;
         public Instant end;
+    }
+
+    public static HashMap<String, Ban> getBans() {
+        return bans;
     }
 }
