@@ -107,7 +107,7 @@ public final class Premium implements SimpleCommand {
     public boolean hasPermission(Invocation invocation) {
         if (!(invocation.source() instanceof Player)) return true;
 
-        return ((Player) invocation.source()).getUniqueId().version() != 4;
+        return ((Player) invocation.source()).getUniqueId().version() != 4; // Kickinuj gracza jeśl ima uuidv4 po dołączeniu!
     }
 
     @Override

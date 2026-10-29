@@ -1,0 +1,10 @@
+site_name: ProxieSuite
+theme:
+  name: "cinder"
+
+repo_url: https://github.com/Tulis12/ProxieSuite
+site_description: "A handy plugin for your Velocity proxy: security, VPN detection, authentication, and automatic premium login!"
+site_author: Tulis
+edit_uri: https://github.com/Tulis12/ProxieSuite/edit/main/mkdocs/docs/
+
+plugins: []
