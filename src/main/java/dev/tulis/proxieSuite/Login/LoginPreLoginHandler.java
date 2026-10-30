@@ -1,6 +1,7 @@
 package dev.tulis.proxieSuite.Login;
 
 import com.velocitypowered.api.event.connection.PreLoginEvent;
+import com.velocitypowered.api.event.connection.PreLoginEvent.PreLoginComponentResult;
 import dev.tulis.proxieSuite.API.PlayerSession;
 import dev.tulis.proxieSuite.Database.Database;
 import dev.tulis.proxieSuite.Login.StateManager.PlayerState;
@@ -105,6 +106,8 @@ public class LoginPreLoginHandler {
         boolean joined,
         boolean onlineAccountExists
     ) {
+        if (!event.getResult().isAllowed()) return;
+
         UUID uuid = event.getUniqueId();
         String username = event.getUsername();
 
@@ -154,6 +157,10 @@ public class LoginPreLoginHandler {
             StateManager.setPlayerState(username, PlayerState.AUTHENTICATED);
             return;
         }
+
+        event.setResult(
+            PreLoginEvent.PreLoginComponentResult.forceOfflineMode()
+        );
 
         if (onlineAccountExists) {
             // For handling suggestion to enable premium logon
